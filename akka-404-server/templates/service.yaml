@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "akka-404-server.fullname" . }}
+  labels:
+    app: {{ template "akka-404-server.name" . }}
+    chart: {{ template "akka-404-server.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ template "akka-404-server.name" . }}
+    release: {{ .Release.Name }}
